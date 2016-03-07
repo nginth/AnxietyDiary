@@ -8,18 +8,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.github.nginth.anxietydiary2.views.DiaryDetailFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diary_date"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diary_entry"/>
         <EditText
             android:id="@+id/detail_diary_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/detail_diary_edit"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

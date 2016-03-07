@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.util.Date;
 
 import io.github.nginth.anxietydiary2.R;
 import io.github.nginth.anxietydiary2.controllers.Provider;
@@ -42,13 +43,14 @@ public class DiaryDetailFragment extends Fragment {
             return null;
 
         View view = inflater.inflate(R.layout.fragment_diary_detail, container, false);
-        //TextView dateTV = (TextView) view.findViewById(R.id.diary_date);
+        TextView dateTV = (TextView) view.findViewById(R.id.detail_date);
         TextView diaryTV = (TextView) view.findViewById(R.id.detail_diary_edit);
 
         // retrieve entry text and date from db
         String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
         int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
-        //dateTV.setText(String.valueOf(date));
+        Date d = new Date(date);
+        dateTV.append(" " + d.toString());
         diaryTV.setText(diaryEntry);
 
         return view;

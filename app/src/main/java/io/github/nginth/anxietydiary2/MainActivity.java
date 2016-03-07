@@ -65,6 +65,7 @@ public class MainActivity extends Activity implements DiaryListFragment.OnListIt
 //                        new String[]{String.valueOf(id)}, Provider.Diaries.DEFAULT_SORT);
 //        c.moveToFirst();
 
+        // change to detail view
         Fragment newFragment = new DiaryDetailFragment();
         Bundle b = new Bundle();
         b.putInt("id", id);
