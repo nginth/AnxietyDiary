@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">AnxietyDiary2</string>
+    <string name="app_name">AnxietyDiary</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="diary_entry">Entry</string>
-    <string name="diary_date">Date: </string>
+    <string name="diary_date">Date:</string>
+
+    <string name="save">Save</string>
 
 </resources>

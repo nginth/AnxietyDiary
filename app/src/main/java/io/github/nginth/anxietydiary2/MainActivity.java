@@ -59,12 +59,6 @@ public class MainActivity extends Activity implements DiaryListFragment.OnListIt
 
     @Override
     public void onListItemSelected(int id) {
-//        Cursor c = this
-//                .getContentResolver()
-//                .query(Provider.Diaries.CONTENT_URI, Provider.Diaries.ALL_ROWS, "? = " + Provider.Diaries._ID,
-//                        new String[]{String.valueOf(id)}, Provider.Diaries.DEFAULT_SORT);
-//        c.moveToFirst();
-
         // change to detail view
         Fragment newFragment = new DiaryDetailFragment();
         Bundle b = new Bundle();
