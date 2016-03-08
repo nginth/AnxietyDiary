@@ -1,9 +1,9 @@
 package io.github.nginth.anxietydiary2.views;
 
 import android.app.Fragment;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,9 @@ import android.widget.TextView;
 import java.util.Date;
 
 import io.github.nginth.anxietydiary2.R;
+import io.github.nginth.anxietydiary2.controllers.DetailOnClickListener;
 import io.github.nginth.anxietydiary2.controllers.Provider;
+import io.github.nginth.anxietydiary2.util.InputFilterNumBounds;
 
 /**
  * Created by nginther on 3/6/16.
@@ -50,28 +52,21 @@ public class DiaryDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_diary_detail, container, false);
         TextView dateTextView = (TextView) view.findViewById(R.id.detail_date);
         EditText diaryEditText = (EditText) view.findViewById(R.id.detail_diary_edit);
+        EditText levelEditText = (EditText) view.findViewById(R.id.detail_level_edit);
         Button saveButton = (Button) view.findViewById(R.id.detail_save);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText diaryEditText = (EditText) ((ViewGroup) v.getParent()).findViewById(R.id.detail_diary_edit);
-                String entry = diaryEditText.getText().toString();
-                ContentValues cv = new ContentValues();
-                cv.put(Provider.Diaries.ENTRY, entry);
-
-                String where = Provider.Diaries._ID + " = ?";
-                String[] whereargs = new String[] {String.valueOf(id)};
-                getActivity().getContentResolver().update(Provider.Diaries.CONTENT_URI, cv, where, whereargs);
-            }
-        });
+        saveButton.setOnClickListener(new DetailOnClickListener(getActivity(), diaryEditText, levelEditText, id, getFragmentManager()));
 
         // retrieve entry text and date from db
         String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
+        int level = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.LEVEL));
         int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
         Date d = new Date(date);
+
         dateTextView.append(d.toString());
         diaryEditText.setText(diaryEntry);
+        levelEditText.setText(String.valueOf(level));
+        levelEditText.setFilters(new InputFilter[] {new InputFilterNumBounds(0, 10)});
 
         return view;
     }

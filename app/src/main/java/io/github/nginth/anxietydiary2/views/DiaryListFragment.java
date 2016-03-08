@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import io.github.nginth.anxietydiary2.R;
 import io.github.nginth.anxietydiary2.controllers.Provider;
 import io.github.nginth.anxietydiary2.models.DatabaseHelper;
 
@@ -25,8 +26,6 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
     private static final int ADAPTER_FLAGS = 0;
     private static final String[] PROJECTION =
             {Provider.Diaries._ID, Provider.Diaries.TITLE, Provider.Diaries.ENTRY, Provider.Diaries.LEVEL, Provider.Diaries.DATE};
-
-    //private static final String[] val1 = {"1", "2", "3", "4"};
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,10 +67,10 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
         adapter =
                 new SimpleCursorAdapter(
                         getActivity(),
-                        android.R.layout.simple_list_item_2,
+                        R.layout.list_main,
                         null,
                         new String[] {DatabaseHelper.TITLE, DatabaseHelper.ENTRY},
-                        new int[] {android.R.id.text1, android.R.id.text2},
+                        new int[] {R.id.title, R.id.entry},
                         ADAPTER_FLAGS);
         setListAdapter(adapter);
     }
