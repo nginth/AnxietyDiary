@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import java.util.GregorianCalendar;
+
 import io.github.nginth.anxietydiary2.models.DatabaseHelper;
 
 /**
@@ -74,7 +76,9 @@ public class Provider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        values.put(Diaries.DATE, new GregorianCalendar().toString());
         long rowID = db.getWritableDatabase().insert(TABLE, Diaries.TITLE, values);
+
         if(rowID > 0) {
             Uri u = ContentUris.withAppendedId(Diaries.CONTENT_URI, rowID);
             getContext().getContentResolver().notifyChange(uri, null); //no content observer

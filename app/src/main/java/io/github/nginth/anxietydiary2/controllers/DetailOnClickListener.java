@@ -15,13 +15,15 @@ public class DetailOnClickListener implements View.OnClickListener {
     private Context ctxt;
     private int id;
     private FragmentManager fm;
+    private Boolean isNew;
 
-    public DetailOnClickListener(Context ctxt, EditText diary, EditText level, int id, FragmentManager fm) {
+    public DetailOnClickListener(Context ctxt, EditText diary, EditText level, int id, FragmentManager fm, Boolean isNew) {
         this.ctxt = ctxt;
         this.diary = diary;
         this.level = level;
         this.id = id;
         this.fm = fm;
+        this.isNew = isNew;
     }
 
     @Override
@@ -40,7 +42,11 @@ public class DetailOnClickListener implements View.OnClickListener {
 
         String where = Provider.Diaries._ID + " = ?";
         String[] whereargs = new String[] {String.valueOf(id)};
-        ctxt.getContentResolver().update(Provider.Diaries.CONTENT_URI, cv, where, whereargs);
+        // if new, insert, else update
+        if(isNew)
+            ctxt.getContentResolver().insert(Provider.Diaries.CONTENT_URI, cv);
+        else
+            ctxt.getContentResolver().update(Provider.Diaries.CONTENT_URI, cv, where, whereargs);
         fm.popBackStackImmediate();
     }
 }

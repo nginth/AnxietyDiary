@@ -1,12 +1,18 @@
 package io.github.nginth.anxietydiary2.views;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -21,6 +27,7 @@ import io.github.nginth.anxietydiary2.models.DatabaseHelper;
  * <p/>
  */
 public class DiaryListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String LOG_TAG = DiaryListFragment.class.getSimpleName();
     private OnListItemSelectedListener mListener;
     private SimpleCursorAdapter adapter;
     private static final int ADAPTER_FLAGS = 0;
@@ -36,6 +43,39 @@ public class DiaryListFragment extends ListFragment implements LoaderManager.Loa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Log.d(LOG_TAG, "id: " + id + "exp: " + R.id.action_add);
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_add:
+                addEntry();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addEntry() {
+        Bundle b = new Bundle();
+        b.putBoolean("isNew", true);
+        Fragment addEntryFragment = new DiaryDetailFragment();
+        addEntryFragment.setArguments(b);
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.replace(android.R.id.content, addEntryFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override

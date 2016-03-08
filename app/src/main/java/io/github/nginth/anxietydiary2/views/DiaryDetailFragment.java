@@ -48,26 +48,33 @@ public class DiaryDetailFragment extends Fragment {
         // no ViewGroup exists so there's no point in populating the view b/c it won't be rendered anyway
         if(container == null)
             return null;
-
+        Boolean isNew = getArguments().getBoolean("isNew");
         View view = inflater.inflate(R.layout.fragment_diary_detail, container, false);
+        loadEntry(view, isNew);
+
+        return view;
+    }
+
+    private void loadEntry(View view, Boolean isNew) {
         TextView dateTextView = (TextView) view.findViewById(R.id.detail_date);
         EditText diaryEditText = (EditText) view.findViewById(R.id.detail_diary_edit);
         EditText levelEditText = (EditText) view.findViewById(R.id.detail_level_edit);
+        // make sure the user only inputs 0-10
+        levelEditText.setFilters(new InputFilter[]{new InputFilterNumBounds(0, 10)});
         Button saveButton = (Button) view.findViewById(R.id.detail_save);
 
-        saveButton.setOnClickListener(new DetailOnClickListener(getActivity(), diaryEditText, levelEditText, id, getFragmentManager()));
+        saveButton.setOnClickListener(new DetailOnClickListener(getActivity(), diaryEditText, levelEditText, id, getFragmentManager(), isNew));
 
         // retrieve entry text and date from db
-        String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
-        int level = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.LEVEL));
-        int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
-        Date d = new Date(date);
+        if(!isNew) {
+            String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
+            int level = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.LEVEL));
+            int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
+            Date d = new Date(date);
 
-        dateTextView.append(d.toString());
-        diaryEditText.setText(diaryEntry);
-        levelEditText.setText(String.valueOf(level));
-        levelEditText.setFilters(new InputFilter[] {new InputFilterNumBounds(0, 10)});
-
-        return view;
+            dateTextView.append(d.toString());
+            diaryEditText.setText(diaryEntry);
+            levelEditText.setText(String.valueOf(level));
+        }
     }
 }
