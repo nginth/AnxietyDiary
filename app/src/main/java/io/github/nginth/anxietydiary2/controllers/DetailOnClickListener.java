@@ -12,24 +12,27 @@ import android.widget.EditText;
 public class DetailOnClickListener implements View.OnClickListener {
     private EditText diary;
     private EditText level;
+    private EditText title;
     private Context ctxt;
     private int id;
     private FragmentManager fm;
     private Boolean isNew;
 
-    public DetailOnClickListener(Context ctxt, EditText diary, EditText level, int id, FragmentManager fm, Boolean isNew) {
+    public DetailOnClickListener(Context ctxt, EditText diary, EditText level, EditText title, int id, FragmentManager fm, Boolean isNew) {
         this.ctxt = ctxt;
         this.diary = diary;
         this.level = level;
         this.id = id;
         this.fm = fm;
         this.isNew = isNew;
+        this.title = title;
     }
 
     @Override
     public void onClick(View v) {
         String entry = diary.getText().toString();
         String levelString = level.getText().toString();
+        String titleString = title.getText().toString();
 
         ContentValues cv = new ContentValues();
         if(!levelString.isEmpty()) {
@@ -38,6 +41,9 @@ public class DetailOnClickListener implements View.OnClickListener {
         }
         if(!entry.isEmpty()) {
             cv.put(Provider.Diaries.ENTRY, entry);
+        }
+        if(!titleString.isEmpty()) {
+            cv.put(Provider.Diaries.TITLE, titleString);
         }
 
         String where = Provider.Diaries._ID + " = ?";

@@ -10,5 +10,6 @@
 
     <string name="save">Save</string>
     <string name="level">Anxiety Level</string>
+    <string name="title">Title</string>
 
 </resources>

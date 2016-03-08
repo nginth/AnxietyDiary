@@ -59,11 +59,16 @@ public class DiaryDetailFragment extends Fragment {
         TextView dateTextView = (TextView) view.findViewById(R.id.detail_date);
         EditText diaryEditText = (EditText) view.findViewById(R.id.detail_diary_edit);
         EditText levelEditText = (EditText) view.findViewById(R.id.detail_level_edit);
+        EditText titleEditText = (EditText) view.findViewById(R.id.detail_title_edit);
+
         // make sure the user only inputs 0-10
         levelEditText.setFilters(new InputFilter[]{new InputFilterNumBounds(0, 10)});
         Button saveButton = (Button) view.findViewById(R.id.detail_save);
 
-        saveButton.setOnClickListener(new DetailOnClickListener(getActivity(), diaryEditText, levelEditText, id, getFragmentManager(), isNew));
+        // TODO: Refactor this to accept a bundle
+        saveButton.setOnClickListener(
+                new DetailOnClickListener(
+                        getActivity(), diaryEditText, levelEditText, titleEditText, id, getFragmentManager(), isNew));
 
         // retrieve entry text and date from db
         if(!isNew) {
