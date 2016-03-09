@@ -65,10 +65,8 @@ public class DiaryDetailFragment extends Fragment {
         levelEditText.setFilters(new InputFilter[]{new InputFilterNumBounds(0, 10)});
         Button saveButton = (Button) view.findViewById(R.id.detail_save);
 
-        // TODO: Refactor this to accept a bundle
         saveButton.setOnClickListener(
-                new DetailOnClickListener(
-                        getActivity(), diaryEditText, levelEditText, titleEditText, id, getFragmentManager(), isNew));
+                new DetailOnClickListener(getActivity(), view, id, getFragmentManager(), isNew));
 
         // retrieve entry text and date from db
         if(!isNew) {

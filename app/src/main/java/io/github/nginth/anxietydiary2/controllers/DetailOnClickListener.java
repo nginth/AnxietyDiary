@@ -6,6 +6,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 
+import io.github.nginth.anxietydiary2.R;
+
 /**
  * Created by nginther on 3/7/16.
  */
@@ -18,14 +20,14 @@ public class DetailOnClickListener implements View.OnClickListener {
     private FragmentManager fm;
     private Boolean isNew;
 
-    public DetailOnClickListener(Context ctxt, EditText diary, EditText level, EditText title, int id, FragmentManager fm, Boolean isNew) {
+    public DetailOnClickListener(Context ctxt, View view, int id, FragmentManager fm, Boolean isNew) {
+        diary = (EditText) view.findViewById(R.id.detail_diary_edit);
+        level = (EditText) view.findViewById(R.id.detail_level_edit);
+        title = (EditText) view.findViewById(R.id.detail_title_edit);
         this.ctxt = ctxt;
-        this.diary = diary;
-        this.level = level;
         this.id = id;
         this.fm = fm;
         this.isNew = isNew;
-        this.title = title;
     }
 
     @Override
