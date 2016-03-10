@@ -45,9 +45,10 @@ public class DiaryDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // no ViewGroup exists so there's no point in populating the view b/c it won't be rendered anyway
+        // if no ViewGroup exists there's no point in populating the view b/c it won't be rendered anyway
         if(container == null)
             return null;
+
         Boolean isNew = getArguments().getBoolean("isNew");
         View view = inflater.inflate(R.layout.fragment_diary_detail, container, false);
         loadEntry(view, isNew);
@@ -70,12 +71,14 @@ public class DiaryDetailFragment extends Fragment {
 
         // retrieve entry text and date from db
         if(!isNew) {
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.TITLE));
             String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
             int level = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.LEVEL));
             int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
             Date d = new Date(date);
 
             dateTextView.append(d.toString());
+            titleEditText.setText(title);
             diaryEditText.setText(diaryEntry);
             levelEditText.setText(String.valueOf(level));
         }
