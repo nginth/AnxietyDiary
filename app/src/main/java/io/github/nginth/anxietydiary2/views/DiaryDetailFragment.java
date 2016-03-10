@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import io.github.nginth.anxietydiary2.R;
 import io.github.nginth.anxietydiary2.controllers.DetailOnClickListener;
 import io.github.nginth.anxietydiary2.controllers.Provider;
@@ -74,10 +72,9 @@ public class DiaryDetailFragment extends Fragment {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.TITLE));
             String diaryEntry = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.ENTRY));
             int level = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.LEVEL));
-            int date = cursor.getInt(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
-            Date d = new Date(date);
+            String date = cursor.getString(cursor.getColumnIndexOrThrow(Provider.Diaries.DATE));
 
-            dateTextView.append(d.toString());
+            dateTextView.setText(date);
             titleEditText.setText(title);
             diaryEditText.setText(diaryEntry);
             levelEditText.setText(String.valueOf(level));

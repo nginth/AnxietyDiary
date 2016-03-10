@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String createStatement = "CREATE TABLE " + TABLE + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + TITLE +  " TEXT, " + ENTRY + " TEXT, " + LEVEL + " INTEGER, " + DATE + " INTEGER)";
+                + TITLE +  " TEXT, " + ENTRY + " TEXT, " + LEVEL + " INTEGER, " + DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
         db.execSQL(createStatement);
 
         ContentValues cv = new ContentValues();
@@ -47,19 +47,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(TITLE, "title 1");
         cv.put(ENTRY, "test entry 1");
         cv.put(LEVEL, 1);
-        cv.put(DATE, d.getTime());
         db.insert(TABLE, TITLE, cv);
 
         cv.put(TITLE, "title 2");
         cv.put(ENTRY, "test entry 2");
         cv.put(LEVEL, 2);
-        cv.put(DATE, d.getTime() + 1000);
         db.insert(TABLE, TITLE, cv);
 
         cv.put(TITLE, "title 3");
         cv.put(ENTRY, "test entry 3");
         cv.put(LEVEL, 3);
-        cv.put(DATE, d.getTime() + 2000);
         db.insert(TABLE, TITLE, cv);
     }
 

@@ -9,8 +9,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import io.github.nginth.anxietydiary2.models.DatabaseHelper;
 
@@ -18,6 +19,7 @@ import io.github.nginth.anxietydiary2.models.DatabaseHelper;
  * Created by nginther on 2/19/16.
  */
 public class Provider extends ContentProvider {
+    private static final String LOG_TAG = Provider.class.getSimpleName();
     private static final int DIARIES = 1;
     private static final int DIARY_ID = 2;
     private static final String TABLE = "diary";
@@ -76,7 +78,7 @@ public class Provider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        values.put(Diaries.DATE, new GregorianCalendar().toString());
+        Log.d(LOG_TAG, "date: " + new Date().toString());
         long rowID = db.getWritableDatabase().insert(TABLE, Diaries.TITLE, values);
 
         if(rowID > 0) {
